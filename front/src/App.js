@@ -5,10 +5,14 @@ import { Profile } from "./pages/Profile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { PrivateRoutes } from "./utils/privateRoutes";
 import { PublicRoutes } from "./utils/publicRoute";
+import { AuthProvider } from './context/AuthContext'
+
 
 function App() {
 	return (
 		<div className="App">
+			<AuthProvider >
+
 			<BrowserRouter>
 				<Routes>
 					<Route element={<PrivateRoutes />}>
@@ -20,6 +24,8 @@ function App() {
 					</Route>
 				</Routes>
 			</BrowserRouter>
+			</AuthProvider>
+
 		</div>
 	);
 }
