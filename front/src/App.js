@@ -11,20 +11,19 @@ import { AuthProvider } from './context/AuthContext'
 function App() {
 	return (
 		<div className="App">
+				<BrowserRouter>
 			<AuthProvider >
-
-			<BrowserRouter>
-				<Routes>
-					<Route element={<PrivateRoutes />}>
-						<Route element={Profile} path="/profile" />
-					</Route>
-					<Route element={<PublicRoutes />}>
-						<Route element={<Home />} path="/" exact />
-						<Route element={<LoginPage />} path="/login" exact />
-					</Route>
-				</Routes>
-			</BrowserRouter>
+					<Routes>
+						<Route element={<PrivateRoutes />}>
+							<Route element={Profile} path="/profile" />
+						</Route>
+						<Route element={<PublicRoutes />}>
+							<Route element={<Home />} path="/" exact />
+							<Route element={<LoginPage />} path="/login" exact />
+						</Route>
+					</Routes>
 			</AuthProvider>
+				</BrowserRouter>
 
 		</div>
 	);
