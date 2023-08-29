@@ -9,39 +9,36 @@ export const Header = () => {
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
-            <div className="container-fluid">
-                <div
-                    className="collapse navbar-collapse"
-                    id="navbarNavDropdown"
-                >
-                    <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <Link to="/" className="nav-link">
-                                Home
+            <div
+                className="container-fluid"
+                style={{ display: "flex", justifyContent: "space-between" }}
+            >
+                <ul className="navbar-nav">
+                    <li className="nav-item">
+                        <Link to="/" className="nav-link">
+                            Home
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/profile" className="nav-link">
+                            Profile
+                        </Link>
+                    </li>
+                </ul>
+                <div>
+                    {user ? (
+                        <div className="nav-item">
+                            <p className="nav-link" onClick={logoutUser}>
+                                logout
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="nav-item">
+                            <Link className="nav-link" to="/login">
+                                Login
                             </Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link to="/profile" className="nav-link">
-                                Profile
-                            </Link>
-                        </li>
-
-                        {user ? (
-                            <li className="nav-item">
-                                <p className="nav-link" onClick={logoutUser}>
-                                    logout
-                                </p>
-                            </li>
-                        ) : (
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/login">
-                                    Login
-                                </Link>
-                            </li>
-                        )}
-                        {/* {user && <p>hello {user.username}</p>} */}
-                    </ul>
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>

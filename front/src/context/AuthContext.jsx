@@ -12,11 +12,14 @@ export const AuthProvider = ({ children }) => {
             ? jwtDecode(localStorage.getItem("authToken"))
             : null
     );
+
     const [authToken, setAuthToken] = useState(() =>
         localStorage.getItem("authToken")
             ? JSON.parse(localStorage.getItem("authToken"))
             : null
     );
+
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     // ############################ functions ############################
@@ -52,11 +55,43 @@ export const AuthProvider = ({ children }) => {
         navigate("/login");
     };
 
+    const updateToken = async () => {
+        console.log("🔁 update token called ");
+        const response = await fetch(
+            "http://127.0.0.1:8000/api/token/refresh/",
+            {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({ refresh: authToken.refresh }),
+            }
+        );
+        const data = await response.json();
+        if (response.status === 200) {
+            setAuthToken(data);
+            setUser(jwtDecode(data.access));
+            localStorage.setItem("authToken", JSON.stringify(data));
+        } else {
+            logoutUser();
+        }
+    };
+
+    // ############################ jsx ############################
+
     let contextData = {
         user: user,
         loginUser: loginUser,
         logoutUser: logoutUser,
     };
+
+    useEffect(() => {
+        let fourminutes = 1000 * 60 * 4;
+        let interval = setInterval(() => {
+            if (authToken) {
+                updateToken();
+            }
+        }, fourminutes);
+        return () => clearInterval(interval);
+    }, [authToken, loading]);
 
     return (
         <AuthContext.Provider value={contextData}>
