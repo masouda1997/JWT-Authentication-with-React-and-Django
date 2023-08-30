@@ -29,7 +29,8 @@ export const AuthProvider = ({ children }) => {
         console.log("🔴", e.target.username.value, e.target.password.value);
         let response = await fetch("http://127.0.0.1:8000/api/token/", {
             method: "POST",
-            headers: { "Content-type": "application/json" },
+            referrerPolicy: "", //  added manually
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 username: e.target.username.value,
                 password: e.target.password.value,
@@ -60,8 +61,8 @@ export const AuthProvider = ({ children }) => {
         const response = await fetch(
             "http://127.0.0.1:8000/api/token/refresh/",
             {
-                method: "POST",
-                headers: { "Content-type": "application/json" },
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ refresh: authToken.refresh }),
             }
         );
